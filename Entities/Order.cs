@@ -1,6 +1,7 @@
 ﻿using Composicao_fixacao2.Entities.Enums;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace Composicao_fixacao2.Entities
@@ -41,6 +42,23 @@ namespace Composicao_fixacao2.Entities
                 soma += oi.subTotal();
             }
             return soma;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("ORDER SUMMARY:");
+            sb.AppendLine("Order moment: " + Moment.ToString("dd/MM/yyyy HH:mm:ss"));
+            sb.AppendLine("Order status: " + Status);
+            sb.AppendLine("Client: " + Cliente.Name + " (" + Cliente.BirthDate.ToString("dd/MM/yyyy") + ") - " + Cliente.Email);
+            sb.AppendLine("Order Itens:");
+            foreach (OrderItem oi in Pedido_itens)
+            {
+                sb.AppendLine(oi.ToString());
+            }
+            sb.AppendLine("Total price: $" + total().ToString("F2", CultureInfo.InvariantCulture));
+
+            return sb.ToString();
         }
     }
 }
